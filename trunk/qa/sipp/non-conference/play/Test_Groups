@@ -1,7 +1,0 @@
-Functional-all test1.csv test2.csv test3.csv  test4.csv test5.csv
-Functional-duration test2.csv
-Functional-repeat test1.csv test5.csv
-Functional-offset test3.csv
-Functional-delay test4.csv test5.csv
-Smoke test2.csv 
-Explicit_Stop test2.csv

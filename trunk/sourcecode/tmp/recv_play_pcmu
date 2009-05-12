@@ -1,1 +1,0 @@
-sudo gst-launch -v udpsrc port=9000 ! 'audio/x-mulaw, rate=(int)44100, channels=(int)1'  ! mulawdec ! audioconvert ! osssink

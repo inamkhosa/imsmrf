@@ -1,2 +1,0 @@
-SEQUENTIAL
-; <audio url="0.wav"/>; repeat="1"; recurl="/usr/local/share/ms-0.3.0/rec.wav" recencoding="ulaw" initsilence="immediate" endsilence="2000" barge="no" cleardigits="yes" escapekey="*" beep="no" mode="overwrite" recstopmask="123" duration="infinite";/usr/local/share/ms-0.3.0/1.wav;818;818;818;818;0;/usr/local/share/ms-0.3.0/rec.wav;0

@@ -1,3 +1,0 @@
-%_topdir /tmp/rpm
-%configure_opt --datarootdir=/etc --enable-ms-trace --disable-media-trace --disable-debug --enable-opt=8 --disable-assert --disable-ms-assert
-%vc_tag release_0_3_1

@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<media_server>
-	<ms username="ms" silence_threshold_db="10" jitter_buffer_ms="500" local_sdp_file="local_sdp" xsd_file="/usr/local/share/ms/mscml.xsd" sound_dir=""/>
-	<sip port="5060"/>
-	<framework port="6000" tracefile_prefix="." tracelevel="31"/>
-	<system local_ip="192.168.0.159" domainname="mediaserver.com"/>
-	<snmp local_port="7000" remote_port="7002" remote_ip="192.168.0.159"/>
-</media_server>

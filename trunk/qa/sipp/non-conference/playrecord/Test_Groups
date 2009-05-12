@@ -1,5 +1,0 @@
-Functional-all test1.csv test2.csv test3.csv test4.csv
-Functional-duration test3.csv
-Functional-barge test1.csv 
-Functional-initsilence test4.csv
-Smoke test1.csv test2.csv
