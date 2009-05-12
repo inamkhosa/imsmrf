@@ -1,0 +1,62 @@
+%define name @PACKAGE@
+%define version @VERSION@
+%define release 1
+
+Summary: IMS compliant Media Server
+Name: %{name}
+Version: %{version}
+Release: %{release}
+Source: ftp://ftp.advancedims.com/pub/ms/%{name}-%{version}.tar.gz
+Vendor: Advancded IMS
+URL: http://www.advancedims.com/
+License: GPL
+Group: Applications/Other
+Prefix: %{_prefix}
+Packager: Waqqas Jabbar <waqqas@advancedims.com>
+BuildArchitectures: i386
+
+
+%description
+Media Server supporting RFC-5022 that can be used in IMS environment.
+TAG = %{vc_tag}
+configured with: ./configure --prefix=%{_prefix} --datarootdir=/etc --enable-ms-trace --disable-media-trace --disable-debug --enable-opt=8 --disable-assert --disable-ms-assert
+
+%prep
+%setup -q
+
+%build
+if [ -x ./configure ]; then
+  CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{_prefix} --datarootdir=/etc --enable-ms-trace --disable-media-trace --disable-debug --enable-opt=8 --disable-assert --disable-ms-assert
+else
+  CFLAGS="$RPM_OPT_FLAGS" ./autogen.sh --prefix=%{_prefix} %{configure_opt}
+fi
+make
+./gen_doxygen.sh
+
+%install
+make install
+mv %{_prefix}/bin/ms %{_prefix}/bin/ms-@VERSION@
+ln -sf %{_prefix}/bin/ms-@VERSION@ %{_prefix}/bin/ms
+
+%post
+MY_INTERFACE="eth0"
+MY_IP=`/sbin/ifconfig  $MY_INTERFACE | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'`
+
+if [ "x$MY_IP" != "x" ]
+then
+	sed -i 's/\(.*local_ip=\"\)\([0-9.]*\)\(\".*\)/\1'$MY_IP'\3/' @datarootdir@/ms-@VERSION@/config.xml
+fi
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README ms-refman.pdf doc/html/*
+%config @datarootdir@/ms-@VERSION@/*
+%{_prefix}/bin/ms 
+%{_prefix}/bin/ms-@VERSION@
+
+%changelog
+
+
+

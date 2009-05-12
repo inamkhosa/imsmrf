@@ -1,0 +1,1 @@
+sudo gst-launch -v audiotestsrc ! filesink location=in.raw

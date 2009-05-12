@@ -1,0 +1,17 @@
+
+Steps to follow:
+1.Update the path of the sipp executable in the path file.
+2.Launch the two Terminals
+3.Change the Directory to this folder in all Terminal Windows
+4.On the first terminal Give the command: 
+./Init_Program.sh 
+(Note: The user should give the required Input)
+5.On the Second Terminal Window, run the media server
+6.See the results.txt file for Output 
+ 
+
+Limitations with functionality implemented so far:
+1.Only local audio files can be played.
+2.Files having the following properties can be played
+audio/x-wav,Uncompressed 16-bit PCM audio
+
