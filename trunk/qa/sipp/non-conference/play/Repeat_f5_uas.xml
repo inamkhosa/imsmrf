@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE scenario SYSTEM "sipp.dtd">
+
+<!-- In this flow after starting normal sesssion client sends an INFO	-->
+<!-- method containing request to play some file. Client gives the	-->
+<!--duration of file to be played. When server fulfills this request	-->
+<!--it send back response of play request. In the response it contains	-->
+<!--an attribute of play duration. This test case will check 		-->
+<!--duration returned from the server. And depending on this it 	-->
+<!--will pass or fail the test!!!!					-->
+<!--For running this test the value of duration in comparison statement -->
+<!--is to be changed accordingly					-->
+
+
+<!-- FLOW NUMBER 5 for checking repeat attribute-->
+<!-- =======>INVITE     -->
+<!-- <========200	-->
+<!-- ========>ACK	-->
+<!-- ========>INFO	-->
+<!-- <========200	-->
+<!-- <========INFO	-->
+<!-- ========>200	-->
+<!-- ========>BYE	-->
+<!-- <========200	-->
+
+<scenario name="duration UAS">
+  <!-- Receiving Client's INVITE                         -->
+  <recv request="INVITE">
+  </recv>
+  <!-- Sending 200 ok -->
+  <send retrans="500">
+    <![CDATA[
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:];tag=[call_number]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Type: application/sdp
+      Content-Length: [len]
+      
+      v=0
+      o=user1 53655765 2353687637 IN IP[local_ip_type] [local_ip]
+      s=-
+      c=IN IP[media_ip_type] [media_ip]
+      t=0 0
+      m=audio [media_port] RTP/AVP 0
+      a=rtpmap:0 PCMU/8000
+    ]]>
+  </send>
+  <!--          Receiving ACK        -->
+  <recv request="ACK">
+  </recv>
+  <!--         Receiving INFO method containing MSCML -->
+  <recv request="INFO">
+  </recv>
+
+  <!-- Sending 200 ok     for INFO              -->
+
+  <send>
+    <![CDATA[
+
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:];tag=[pid]SIPpTag01[call_number]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Type: application/mscml
+      Content-Length: [len]
+      <?xml version="1.0" encoding="UTF-8" ?>
+
+      <MediaServerControl version="1.0">
+      <request>
+      <play id="3">
+      <prompt repeat="2">
+      <audio url="num_dialed.raw" encoding="ulaw"/>
+      </prompt>
+      </play>
+      </request>
+      </MediaServerControl>
+    ]]>
+  </send>
+  <!--pause milliseconds="1000"/ -->
+  <!-- Sending MSCML response in INFO method -->
+  <send>
+    <![CDATA[
+
+      INFO sip:[service]@192.168.0.111 SIP/2.0
+      Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+      From: sipp <sip:sipp@[local_ip]:[local_port]>;tag=[pid]SIPpTag00[call_number]
+      To: sut <sip:[service]@192.168.0.111>
+      Call-ID: [call_id]
+      CSeq: 1 INFO
+      Contact: sip:sipp@[local_ip]:[local_port]
+      Max-Forwards: 70
+      Subject: Performance Test
+      Content-Type: application/sMSCML
+      Content-Length: [len]
+      <?xml version="1.0" encoding="UTF-8" ?>
+
+      <MediaServerControl version="1.0">
+      <response id="3" request="play" code="258" text="file played" reason="EOF" playduration="2000" playoffset="3">
+      <error_info code="123" text="abc" context="asd"/>
+      </response>
+      </MediaServerControl>
+    ]]>
+</send>
+<!-- Receiving 200 ok from client            -->
+<recv response="200">
+  </recv>
+  <!-- Receiving BYE from client          -->
+  <recv request="BYE">
+  </recv>
+  <!-- sending BYE's response 200 ok          -->
+  <send>
+    <![CDATA[
+      SIP/2.0 200 OK
+      [last_Via:]
+      [last_From:]
+      [last_To:]
+      [last_Call-ID:]
+      [last_CSeq:]
+      Contact: <sip:[local_ip]:[local_port];transport=[transport]>
+      Content-Length: 0
+    ]]>
+  </send>
+
+  <!-- definition of the response time repartition table (unit is ms)   -->
+  <ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
+
+  <!-- definition of the call length repartition table (unit is ms)     -->
+  <CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
+
+</scenario>
+

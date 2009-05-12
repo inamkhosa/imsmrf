@@ -1,0 +1,1 @@
+gst-launch -v audiotestsrc ! mulawenc ! filesink location=in.wav
