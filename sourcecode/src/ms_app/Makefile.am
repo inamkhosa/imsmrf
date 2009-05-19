@@ -20,7 +20,6 @@ LDADD = $(SNDFILE_DEPS_LIBS) $(GLIB_DEPS_LIBS) $(LIBXML_DEPS_LIBS) -lstdc++ -lms
 -L$(top_srcdir)/src/dreg \
 -L$(top_srcdir)/src/mscml_encoder \
 -L$(top_srcdir)/src/util \
--L$(top_srcdir)/src/sdp_oam \
 -L$(top_srcdir)/src/snmp \
 -L$(top_srcdir)/src/snmp_parser \
 $(UTIL_DEPS_LIBS) $(SDPPARSER_DEPS_LIBS) $(SOA_DEPS_LIBS) -lsipstack -lDNSResolver

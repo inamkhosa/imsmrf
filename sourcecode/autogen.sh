@@ -11,6 +11,9 @@ fi
 
 rm -f config.cache acconfig.h
 
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+export CPPFLAGS="-I/usr/include/amps"
+
 echo "- libtoolize."		&& \
 libtoolize --force		&& \
 echo "- aclocal."		&& \
