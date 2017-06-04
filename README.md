@@ -1,6 +1,6 @@
 # Build & Install Media Server
 Build Dependencies 
-IMS Offline Charging System Depends on following Libraries. Make sure that you have built /installed all of the following libraries before building Media Server 
+Make sure that you have built /installed all of the following libraries before building Media Server 
 - ibsndfile: Library for Reading and Writing Sound Files 
 - libutil: UTIL Library 
 - libamps: AMPS (Asynchronous Middleware for Protocol Servers) Library 
